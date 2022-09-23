@@ -1,6 +1,7 @@
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import TodoList from "./component/todoList";
+import TriangleTree from "./component/triangleTree";
 
 const App = () => {
   return (
@@ -12,6 +13,9 @@ const App = () => {
       >
         <Tab eventKey="todoList" title="Todo List">
           <TodoList />
+        </Tab>
+        <Tab eventKey="triangleTree" title="Triangle Tree">
+          <TriangleTree />
         </Tab>
       </Tabs>
     </div>
