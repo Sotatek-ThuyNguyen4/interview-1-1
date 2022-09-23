@@ -1,79 +1,19 @@
-import { useRef, useState } from "react";
-import { RiAddLine, RiErrorWarningLine } from "react-icons/ri";
-import { useDispatch, useSelector } from "react-redux";
-import { addTask } from "./store/task";
+import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs";
+import TodoList from "./component/todoList";
 
 const App = () => {
-  const taskRef = useRef(null);
-  const [task, setTask] = useState("");
-
-  const dispatch = useDispatch();
-  const { taskList, showError } = useSelector(({ Task }) => Task);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!task.trim() || !task.trim()) return;
-
-    const addTaskAction = addTask({ id: new Date().getTime(), title: task });
-    dispatch(addTaskAction);
-
-    setTask("");
-
-    taskRef.current.focus();
-  };
-
   return (
     <div className="container mx-auto row py-5">
-      <div className="col-12 col-lg-6 offset-lg-3 col-md-8 offset-md-2">
-        <h1 className="text-center mb-5">Todo List</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="row">
-            <div className="col-12 col-sm-10">
-              <input
-                ref={taskRef}
-                value={task}
-                onChange={(e) => setTask(e.target.value)}
-                className="form-control"
-                placeholder="Input your task"
-                required
-              />
-            </div>
-            <div className="col-12 mt-3 mt-sm-0  col-sm-2 text-center">
-              <button
-                type="submit"
-                className="btn btn-primary d-flex align-items-center"
-              >
-                Add <RiAddLine className="ms-1" />
-              </button>
-            </div>
-          </div>
-        </form>
-        <div className="row">
-          <div className="col-12 col-sm-10">
-            {taskList && taskList.length > 0 && (
-              <ul className="list-group mt-3">
-                {taskList.map((item, idx) => {
-                  return (
-                    <li className="list-group-item" key={item.id}>
-                      {item.title}
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
-          </div>
-        </div>
-
-        {showError && (
-          <p
-            className="alert alert-danger mt-3 d-flex align-items-center"
-            role="alert"
-          >
-            <RiErrorWarningLine className="me-1" /> Error when removing item
-            from todo list
-          </p>
-        )}
-      </div>
+      <Tabs
+        defaultActiveKey="todoList"
+        id="uncontrolled-tab-example"
+        className="mb-3 d-flex justify-content-center"
+      >
+        <Tab eventKey="todoList" title="Todo List">
+          <TodoList />
+        </Tab>
+      </Tabs>
     </div>
   );
 };
